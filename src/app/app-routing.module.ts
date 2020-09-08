@@ -4,11 +4,11 @@ import { ContacModule } from './@public/pages/contac/contac.module';
 
 const routes: Routes = [
   {
-    path: '', redirectTo: 'home', pathMatch: 'full'
+    path: '', redirectTo: '', pathMatch: 'full'
   },
 
   {
-    path: '**', redirectTo: 'home', pathMatch: 'full'
+    path: '**', redirectTo: '', pathMatch: 'full'
   }
 
 ];
