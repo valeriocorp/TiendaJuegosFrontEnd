@@ -17,6 +17,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
+                        "allowedCommonJsDependencies": ["zen-observable", "graphql-tag"],
                         "outputPath": "dist/tienda-juegos-frontend",
                         "index": "src/index.html",
                         "main": "src/main.ts",
@@ -28,7 +29,6 @@
                             "src/assets"
                         ],
                         "styles": [
-                            "./node_modules/bootstrap/dist/css/bootstrap.css",
                             "src/styles.scss"
                         ],
                         "scripts": [
