@@ -14,12 +14,12 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    /*this.users.getUsers().subscribe(result => {
+    this.users.getUsers(1,1).subscribe(result => {
       console.log(result);
     });
-    this.auth.getMe().subscribe(result => {
-      console.log(result);
-    });*/
+  //  this.auth.getMe().subscribe(result => {
+  //    console.log(result);
+  //  });
   }
 
 }

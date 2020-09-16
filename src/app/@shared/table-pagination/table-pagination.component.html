@@ -1,0 +1,30 @@
+<div class="table .table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col" *ngFor="let column of tableColums">{{column.label}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of data$ | async">
+                <td *ngFor="let val of tableColums">{{ data[val.property] }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+<div class="d-flex justify-content-between p-2">
+    <ngb-pagination *ngIf="infoPage.pages > 1" [collectionSize]="infoPage.total" [(page)]="infoPage.page" [pageSize]="infoPage.itemsPage" (pageChange)="changePage()">
+    </ngb-pagination>
+
+    <select class="custom-select " style="width: auto " [(ngModel)]="infoPage.itemsPage" (ngModelChange)="changePage()">
+      <option [ngValue]="5">5 Items por pagina</option>
+      <option [ngValue]="10">10 Items por pagina</option>
+      <option [ngValue]="15">15 Items por pagina</option>
+      <option [ngValue]="20">20 Items por pagina</option>
+      <option [ngValue]="30">30 Items por pagina</option>
+
+    </select>
+</div>
