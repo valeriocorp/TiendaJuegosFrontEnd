@@ -23,8 +23,7 @@
                 <label for="birthday"><b>Fecha de nacimiento</b></label>
                 <app-date-picker-legal-age (newDate)="dataAsign($event)"></app-date-picker-legal-age>
                 <label for="email"><b>Email</b></label>
-                <input [ngClass]="{'is-valid': !email.invalid,'is-invalid': email.invalid}" class="form-control" type="email" placeholder="Introdusca su correo" name="email" #email="ngModel" [(ngModel)]="register.email" pattern="^[a-zA-Z0-9._-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
-                    required/>
+                <input [ngClass]="{'is-valid': !email.invalid,'is-invalid': email.invalid}" class="form-control" type="email" placeholder="Introdusca su correo" name="email" #email="ngModel" [(ngModel)]="register.email" [pattern]="emailPattern" required/>
                 <div class="alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
                     <div *ngIf="email.errors.required">Introdusca un correo electronico valido porfavor </div>
                     <div *ngIf="email.errors && email.errors.pattern">El correo electronico no sigue el formato correcto. sigue este ejemplo: prueba@prueba.com </div>

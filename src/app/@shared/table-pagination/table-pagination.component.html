@@ -1,13 +1,21 @@
-<div class="table .table-responsive">
+<button class="btn btn-success float-right m-2" (click)="manageAction('add','')"><i class="fas fa-plus"></i> &nbsp; Añadir</button>
+<div class="table table-responsive">
     <table class="table table-striped">
         <thead>
             <tr>
                 <th scope="col" *ngFor="let column of tableColums">{{column.label}}</th>
+                <th scope="col">Gestionar</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let data of data$ | async">
                 <td *ngFor="let val of tableColums">{{ data[val.property] }}</td>
+                <td>
+                    <button type="button" class="btn btn-warning" (click)="manageAction('edit',data)"><i class="fas fa-edit"></i></button>&nbsp;
+                    <button type="button" class="btn btn-info" (click)="manageAction('info',data)"><i class="fas fa-info"></i></button>&nbsp;
+                    <button type="button" class="btn btn-danger" (click)="manageAction('block',data)"><i class="fas fa-minus-circle"></i></button>
+                </td>
+
             </tr>
         </tbody>
     </table>
@@ -16,7 +24,7 @@
 
 
 <div class="d-flex justify-content-between p-2">
-    <ngb-pagination *ngIf="infoPage.pages > 1" [collectionSize]="infoPage.total" [(page)]="infoPage.page" [pageSize]="infoPage.itemsPage" (pageChange)="changePage()">
+    <ngb-pagination [collectionSize]="infoPage.total" [(page)]="infoPage.page" [pageSize]="infoPage.itemsPage" (pageChange)="changePage()">
     </ngb-pagination>
 
     <select class="custom-select " style="width: auto " [(ngModel)]="infoPage.itemsPage" (ngModelChange)="changePage()">
