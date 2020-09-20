@@ -24,7 +24,7 @@
 
 
 <div class="d-flex justify-content-between p-2">
-    <ngb-pagination [collectionSize]="infoPage.total" [(page)]="infoPage.page" [pageSize]="infoPage.itemsPage" (pageChange)="changePage()">
+    <ngb-pagination [collectionSize]="infoPage.total" [maxSize]="5" [boundaryLinks]="true" [(page)]="infoPage.page" [pageSize]="infoPage.itemsPage" (pageChange)="changePage()">
     </ngb-pagination>
 
     <select class="custom-select " style="width: auto " [(ngModel)]="infoPage.itemsPage" (ngModelChange)="changePage()">
