@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ContacModule } from './@public/pages/contac/contac.module';
 
 const routes: Routes = [
   {

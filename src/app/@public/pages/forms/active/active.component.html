@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg">
+
+        </div>
+        <div class="col-lg-6">
+            <form (ngSubmit)="add()" #forma="ngForm">
+                <h1>Activar usuario</h1>
+                <p>Introduzca los credenciales para activar el usuario</p>
+                <label for="birthday"><b>Fecha de nacimiento</b></label>
+                <app-date-picker-legal-age (newDate)="dataAsign($event)"></app-date-picker-legal-age>
+
+                <label for="password"><b>Contraseña</b></label>
+                <input [ngClass]="{'is-valid': !password.invalid,'is-invalid': password.invalid}" class="form-control" minlength=4 type="password" #password="ngModel" [(ngModel)]="values.password" placeholder="Introduzca la contraseña" name="password" required />
+                <div class="alert-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+                    <div *ngIf="password.errors.required">Introdusca una contraseña de mas de 4 digitos</div>
+                </div>
+                <label for="passwordTwo"><b>Repetir Contraseña</b></label>
+                <input [ngClass]="{'is-valid': !passwordTwo.invalid,'is-invalid': passwordTwo.invalid}" class="form-control" minlength=4 type="password" #passwordTwo="ngModel" [(ngModel)]="values.passwordTwo" placeholder="Repita la contraseña" name="passwordTwo" required
+                />
+                <div class="alert-danger" *ngIf="passwordTwo.invalid && (passwordTwo.dirty || passwordTwo.touched)">
+                    <div *ngIf="passwordTwo.errors.required">Introdusca una contraseña de mas de 4 digitos</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg">
+                        <button type="submit" [disabled]="!forma.valid" class="signup-btn">Activar usuario</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg">
+
+        </div>
+    </div>
+</div>

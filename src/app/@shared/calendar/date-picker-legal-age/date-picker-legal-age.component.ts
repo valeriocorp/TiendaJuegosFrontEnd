@@ -30,6 +30,7 @@ export class DatePickerLegalAgeComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.model);
   }
   selectDateTime(){
     console.log(this.model);

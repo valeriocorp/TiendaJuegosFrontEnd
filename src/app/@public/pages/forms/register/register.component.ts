@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { IRegisterForm, IResultRegister } from '../../../../@core/interfaces/register.interface';
-import { ApiService } from '../../../../@graphql/services/api.service';
 import { UsersService } from '../../../../@core/services/users.service';
 import { basicAlert } from '../../../../@shared/alert/toasts';
 import { TYPE_ALERT } from '@shared/alert/values.config';
@@ -20,7 +19,7 @@ export class RegisterComponent implements OnInit {
       email: '',
       password: '',
       birthday: '',
-  }
+  };
 
   constructor(private api: UsersService, private router: Router) { }
 

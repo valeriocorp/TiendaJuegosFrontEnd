@@ -1,1 +1,1 @@
-<input type="text" [(ngModel)]="model" (click)="d.toggle()" ngbDatepicker #d="ngbDatepicker" (ngModelChange)="selectDateTime()" [minDate]="minDate" [maxDate]="maxDate" placeholder="Seleccione la fecha" readonly/>
+<input type="text" ngbDatepicker placeholder="Seleccione fecha" #d="ngbDatepicker" [(ngModel)]="model" (click)="d.toggle()" (ngModelChange)="selectDateTime()" [minDate]="minDate" [maxDate]="maxDate" readonly/>
