@@ -8,6 +8,7 @@ import { UsersAdminService } from './users-admin.service';
 import { IRegisterForm } from '../../../@core/interfaces/register.interface';
 import { basicAlert } from '@shared/alert/toasts';
 import { TYPE_ALERT } from '@shared/alert/values.config';
+import { ACTIVE_FILTERS } from '@core/constant/filters';
 
 @Component({
   selector: 'app-users',
@@ -22,6 +23,8 @@ export class UsersComponent implements OnInit {
  resultData: IResultData;
  include: boolean;
  columns: Array<ITableColums>;
+ filterActiveValues = ACTIVE_FILTERS.ACTIVE;
+
 
  constructor(private service: UsersAdminService){}
 
@@ -57,6 +60,10 @@ export class UsersComponent implements OnInit {
       {
         property: 'birthday',
         label: 'Dia de cumpleaños del usuario'
+      },
+      {
+        property: 'active',
+        label: '¿Activo?'
       },
     ];
   }
@@ -99,17 +106,22 @@ export class UsersComponent implements OnInit {
           'Detalles',
           `${user.name} ${user.lastname}<br/>
           <i class="fas fa-envelope-open-text"></i>&nbsp;&nbsp;${user.email}`,
-          420
+          (user.active !== false) ? 375 : 400,
+          '<i class="fas fa-edit"></i> Editar',
+          (user.active !== false) ? '<i class="fas fa-lock"></i> Bloquear' : '<i class="fas fa-lock-open"></i> Desbloquear'
         );
         if (result) {
          this.updateForm(html, user);
         } else if (result === false) {
-          this.blockForm(user);
+          this.unblockForm(user, false);
         }
         break;
       case 'block':
-        this.blockForm(user);
+        this.unblockForm(user, false);
         break;
+        case 'unblock':
+          this.unblockForm(user, true);
+          break;
       default:
         break;
     }
@@ -130,6 +142,13 @@ export class UsersComponent implements OnInit {
         console.log(res);
         if (res.status) {
           basicAlert(TYPE_ALERT.SUCCESS, res.message);
+          this.service.sendEmailActive(res.user.id, user.email).subscribe(
+            resEmail => {
+              (resEmail.status) ?
+          basicAlert(TYPE_ALERT.SUCCESS, resEmail.message) :
+          basicAlert(TYPE_ALERT.WARNING, resEmail.message);
+            }
+          );
           return;
         }
         basicAlert(TYPE_ALERT.WARNING, res.message);
@@ -158,8 +177,15 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  private async blockForm(user: any) {
-    const result = await infoDetailBasic(
+  private async unblockForm(user: any, unblock: boolean ) {
+    const result = (unblock) ? 
+    await infoDetailBasic(
+      '¿Estas seguro que deseas Desbloquear?',
+      'Si Desbloqueas el usuario seleccionado, podra comprar e iniciar sesion',
+      500,
+      'No, no desbloquear',
+      'Si, si desbloquear'
+    ) : await infoDetailBasic(
       '¿Estas seguro que deseas bloquear?',
       'Si bloqueas el usuario seleccionado, no se mostrara mas',
       500,
@@ -167,12 +193,13 @@ export class UsersComponent implements OnInit {
       'Si, si bloquear'
     );
     if (result === false) {
-      this.blockUser(user.id);
+      //Si resultado falso queremos bloquear/ desblouear
+      this.unblockUser(user.id, unblock, true);
     }
   }
 
-  blockUser(id: string) {
-    this.service.block(id).subscribe((res: any) => {
+  private unblockUser(id: string, unblock: boolean = false, admin: boolean = false) {
+    this.service.unblock(id, unblock, admin).subscribe((res: any) => {
       console.log(res);
       if (res.status) {
         basicAlert(TYPE_ALERT.SUCCESS, res.message);

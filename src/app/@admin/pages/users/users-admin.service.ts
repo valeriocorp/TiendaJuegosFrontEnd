@@ -3,7 +3,7 @@ import { UsersService } from '@core/services/users.service';
 import { IRegisterForm } from '@core/interfaces/register.interface';
 import { Apollo } from 'apollo-angular';
 import { ApiService } from '@graphql/services/api.service';
-import { BLOCK_USER, UPDATE_USER } from '../../../@graphql/operations/mutation/user';
+import { BLOCK_USER, UPDATE_USER, ACTIVE_EMAIL_USER } from '../../../@graphql/operations/mutation/user';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -33,15 +33,31 @@ export class UsersAdminService extends ApiService{
       );
   }
 
-  block(id: string) {
+  unblock(id: string, unblock: boolean = false, admin: boolean = false) {
     return this.set(
       BLOCK_USER,
       {
-        id
+        id,
+        unblock,
+        admin
       },
       {}).pipe(
         map((res: any) => {
         return res.blockUser;
+        })
+      );
+  }
+
+  sendEmailActive(id: string, email: string){
+    return this.set(
+      ACTIVE_EMAIL_USER,
+      {
+        id,
+        email
+      },
+      {}).pipe(
+        map((res: any) => {
+        return res.activeUserEmail;
         })
       );
   }
